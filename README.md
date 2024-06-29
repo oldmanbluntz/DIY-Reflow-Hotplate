@@ -7,4 +7,4 @@ https://www.instructables.com/The-Ultimate-DIY-Hot-Plate-Powered-by-ESP32-and-IR
 
 I have also added an SSD1306 based OLED screen to show the temperature data.
 
-The code uses the SPIFFS on the ESP32 to house the webpage, and saves the curve.txt to the MicroSD card.
+The code uses the SPIFFS on the ESP32 to house the webpage files (in the data folder), and saves the curve.txt to the MicroSD card.
