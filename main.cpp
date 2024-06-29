@@ -22,7 +22,7 @@ const char* password = "PASSWORD_HERE";
 #define SCREEN_ADDRESS 0x3C
 
 // Define pin constants for LEDs and button
-const int ledPinOrange = 2, ledPinWhite = 13, ledPinGreen = 14, ledPinRed = 12, button = 26;
+const int ledPinYellow = 2, ledPinBlue = 13, ledPinGreen = 14, ledPinRed = 12, button = 26;
 
 // Initialize web server and sensor/display objects
 WebServer server(80);
@@ -41,8 +41,8 @@ const unsigned long debounceDelay = 50;
 void setup() {
   Serial.begin(115200);
   // Initialize pins
-  pinMode(ledPinWhite, OUTPUT); pinMode(ledPinGreen, OUTPUT); pinMode(ledPinOrange, OUTPUT); pinMode(ledPinRed, OUTPUT); pinMode(button, INPUT_PULLUP);
-  digitalWrite(ledPinGreen, LOW); digitalWrite(ledPinWhite, LOW); digitalWrite(ledPinOrange, LOW); digitalWrite(ledPinRed, LOW);
+  pinMode(ledPinBlue, OUTPUT); pinMode(ledPinGreen, OUTPUT); pinMode(ledPinYellow, OUTPUT); pinMode(ledPinRed, OUTPUT); pinMode(button, INPUT_PULLUP);
+  digitalWrite(ledPinGreen, LOW); digitalWrite(ledPinBlue, LOW); digitalWrite(ledPinYellow, LOW); digitalWrite(ledPinRed, LOW);
   checkLeds(); // Initialize LED sequence
 
   mlx.begin(); // Initialize temperature sensor
@@ -70,9 +70,9 @@ void setup() {
   server.on("/stop", HTTP_POST, []() { digitalButton = 0; stopHeatingCycle(); server.sendHeader("Location", "/"); server.send(303); });
   server.on("/ledstatus", HTTP_GET, []() {
     StaticJsonDocument<200> doc;
-    doc["ledWhite"] = digitalRead(ledPinWhite);
+    doc["ledBlue"] = digitalRead(ledPinBlue);
     doc["ledGreen"] = digitalRead(ledPinGreen);
-    doc["ledOrange"] = digitalRead(ledPinOrange);
+    doc["ledYellow"] = digitalRead(ledPinYellow);
     doc["ledRed"] = digitalRead(ledPinRed);
     String response;
     serializeJson(doc, response);
@@ -128,15 +128,15 @@ void loop() {
     }
 
     if (temp < targetTemp - 1) ledStatus = HIGH; else ledStatus = LOW;
-    digitalWrite(ledPinOrange, ledStatus);
+    digitalWrite(ledPinYellow, ledStatus);
     delay(250);
   }
 }
 
 // LED sequence function
 void checkLeds() {
-  digitalWrite(ledPinWhite, HIGH); delay(300); digitalWrite(ledPinGreen, HIGH); delay(300); digitalWrite(ledPinOrange, HIGH); delay(300); digitalWrite(ledPinRed, HIGH);
-  delay(300); digitalWrite(ledPinRed, LOW); delay(300); digitalWrite(ledPinOrange, LOW); delay(300); digitalWrite(ledPinGreen, LOW); delay(1000);
+  digitalWrite(ledPinBlue, HIGH); delay(300); digitalWrite(ledPinGreen, HIGH); delay(300); digitalWrite(ledPinYellow, HIGH); delay(300); digitalWrite(ledPinRed, HIGH);
+  delay(300); digitalWrite(ledPinRed, LOW); delay(300); digitalWrite(ledPinYellow, LOW); delay(300); digitalWrite(ledPinGreen, LOW); delay(1000);
 }
 
 // Default temperature curve
@@ -164,5 +164,5 @@ void handleFileUpload() {
 
 // Stop heating cycle
 void stopHeatingCycle() {
-  start = 0; digitalButton = 0; targetTemp = 0; digitalWrite(ledPinGreen, LOW); digitalWrite(ledPinOrange, LOW); digitalWrite(ledPinRed, LOW);
+  start = 0; digitalButton = 0; targetTemp = 0; digitalWrite(ledPinGreen, LOW); digitalWrite(ledPinYellow, LOW); digitalWrite(ledPinRed, LOW);
 }
