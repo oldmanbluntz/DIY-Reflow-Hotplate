@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DIY Reflow Hot Plate</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="/script.js" defer></script>
+</head>
+<body>
+  <h1>DIY Reflow Hot Plate</h1>
+  <form method="POST" action="/upload" enctype="multipart/form-data" id="uploadForm">
+    <input type="file" name="curvefile" accept=".txt">
+    <input type="submit" value="Upload Curve File">
+  </form>
+  <form method="POST" action="/start" id="startForm">
+    <button type="submit">Start Heating Cycle</button>
+  </form>
+  <form method="POST" action="/stop" id="stopForm">
+    <button type="submit">Stop Heating Cycle</button>
+  </form>
+
+  <h2>LED Status</h2>
+  <div id="ledStatus">
+    <p>Power: <span id="ledWhite">OFF</span></p>
+    <p>Loaded: <span id="ledGreen">OFF</span></p>
+    <p>Heater On/Off: <span id="ledOrange">OFF</span></p>
+    <p>Plates Hot: <span id="ledRed">OFF</span></p>
+  </div>
+</body>
+</html>
